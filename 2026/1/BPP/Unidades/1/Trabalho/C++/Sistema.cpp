@@ -52,6 +52,16 @@ void adicionarNoticiaNoVetor(std::string texto_atual, std::string classificacao_
     dados.push_back(noticia_atual);
 }
 
+bool verificacaoDeClassificacao(std::string classificacao_atual){
+    if (classificacao_atual != "confiavel" && classificacao_atual != "duvidosa" && classificacao_atual != "falsa"){
+        std::cout << "Erro: classificação inserida é inválida, tente novamente." << std::endl;
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+
 bool verificacaoDeTexto(std::string texto_atual){
     if (texto_atual == ""){
         std::cout << "Erro: notícia adicionada não possui texto, tente novamente." << std::endl;
@@ -66,13 +76,28 @@ void criarNoticiaManual() {
     std::string texto, classificacao;
 
     std::cout << "Digite o texto: ";
-    getline(std::cin, texto);
+
+    if (!getline(std::cin, texto)) {
+        std::cout << "Erro: falha na leitura." << std::endl;
+        return;
+    }
 
     std::cout << "Digite classificacao: ";
-    getline(std::cin, classificacao);
+
+    if (!getline(std::cin, classificacao)) {
+        std::cout << "Erro: falha na leitura." << std::endl;
+        return;
+    }
+
+    if (!verificacaoDeClassificacao(classificacao)){
+        return;
+    }
 
     if (verificacaoDeTexto(texto)){
         adicionarNoticiaNoVetor(texto, classificacao);
+    } 
+    else {
+        return;
     }
 }
 
@@ -80,7 +105,11 @@ void criarNoticiaAuto() {
     std::string texto;
 
     std::cout << "Digite o texto: ";
-    getline(std::cin, texto);
+
+    if (!getline(std::cin, texto)) {
+        std::cout << "Erro: falha na leitura." << std::endl;
+        return;
+    }
 
     std::string classificacao = analisarNoticia(texto);
     
@@ -107,7 +136,11 @@ void abrirMenu() {
         std::cout << "4 - sair" << std::endl;
 
         std::string entrada;
-        getline(std::cin,entrada);
+
+        if (!getline(std::cin, entrada)) {
+        std::cout << "Erro: falha na leitura." << std::endl;
+        break;
+        }
 
         if (entrada == "1") {
             criarNoticiaManual();

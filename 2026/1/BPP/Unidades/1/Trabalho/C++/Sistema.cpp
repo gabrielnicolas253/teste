@@ -2,17 +2,15 @@
 #include <vector>
 #include <string>
 
-using namespace std;
-
 struct D {
-    string t;
-    string c;
+    std::string t;
+    std::string c;
 };
 
-vector<D> dados;
+std::vector<D> dados;
 
 // função que faz tudo
-void f(string a, string b = "") {
+void f(std::string a, std::string b = "") {
     // adiciona coisa
     if (a != "") {
         D d;
@@ -26,29 +24,29 @@ void f(string a, string b = "") {
 
         dados.push_back(d);
     } else {
-        cout << "erro" << endl;
+        std::cout << "erro" << std::endl;
     }
 }
 
 void func2() {
     // lista tudo
     for (int i = 0; i < dados.size(); i++) {
-        cout << "Texto: " << dados[i].t << endl;
-        cout << "Classificacao: " << dados[i].c << endl;
-        cout << "-------------------" << endl;
+        std::cout << "Texto: " << dados[i].t << std::endl;
+        std::cout << "Classificacao: " << dados[i].c << std::endl;
+        std::cout << "-------------------" << std::endl;
     }
 }
 
-string analisar(string txt) {
+std::string analisar(std::string txt) {
     int score = 0;
     
-    if (txt.find("FONTE") == string::npos) {
+    if (txt.find("FONTE") == std::string::npos) {
         score = score + 1;
     }
-    if (txt.find("!!!") != string::npos) {
+    if (txt.find("!!!") != std::string::npos) {
         score = score + 1;
     }
-    if (txt.find("URGENTE") != string::npos) {
+    if (txt.find("URGENTE") != std::string::npos) {
         score = score + 1;
     }
     if (txt.length() < 10) {
@@ -65,13 +63,13 @@ string analisar(string txt) {
 }
 
 void add_manual() {
-    string t, c;
+    std::string t, c;
 
-    cout << "Digite o texto: ";
-    getline(cin, t);
+    std::cout << "Digite o texto: ";
+    getline(std::cin, t);
 
-    cout << "Digite classificacao: ";
-    getline(cin, c);
+    std::cout << "Digite classificacao: ";
+    getline(std::cin, c);
 
     if (c == "") {
         f(t);
@@ -81,24 +79,24 @@ void add_manual() {
 }
 
 void add_auto() {
-    string t;
+    std::string t;
 
-    cout << "Digite o texto: ";
-    getline(cin, t);
+    std::cout << "Digite o texto: ";
+    getline(std::cin, t);
 
-    string c = analisar(t);
+    std::string c = analisar(t);
     f(t, c);
 }
 
 void menu() {
     while (true) {
-        cout << "1 - adicionar manual" << endl;
-        cout << "2 - adicionar automatico" << endl;
-        cout << "3 - listar" << endl;
-        cout << "4 - sair" << endl;
+        std::cout << "1 - adicionar manual" << std::endl;
+        std::cout << "2 - adicionar automatico" << std::endl;
+        std::cout << "3 - listar" << std::endl;
+        std::cout << "4 - sair" << std::endl;
 
-        string op;
-        getline(cin, op);
+        std::string op;
+        getline(std::cin, op);
 
         if (op == "1") {
             add_manual();
@@ -109,7 +107,7 @@ void menu() {
         } else if (op == "4") {
             break;
         } else {
-            cout << "errado" << endl;
+            std::cout << "errado" << std::endl;
         }
     }
 }

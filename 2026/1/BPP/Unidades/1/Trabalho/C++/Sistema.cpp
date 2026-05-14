@@ -2,33 +2,33 @@
 #include <vector>
 #include <string>
 
-struct D {
-    std::string t;
-    std::string c;
+struct Noticia {
+    std::string texto;
+    std::string classificacao;
 };
 
-std::vector<D> dados;
+std::vector<Noticia> dados;
 
 // função que faz tudo
-void f(std::string a, std::string b = "") {
+void adicionarNoticiaNoVetor(std::string texto_atual, std::string classificacao_atual = "") {
     // adiciona coisa
-    if (a != "") {
-        D d;
-        d.t = a;
+    if (texto_atual != "") {
+        Noticia noticia_atual;
+        noticia_atual.texto = texto_atual;
 
-        if (b == "") {
-            d.c = "duvidosa";
+        if (classificacao_atual == "") {
+            noticia_atual.classificacao = "duvidosa";
         } else {
-            d.c = b;
+            noticia_atual.classificacao = classificacao_atual;
         }
 
-        dados.push_back(d);
+        dados.push_back(noticia_atual);
     } else {
         std::cout << "erro" << std::endl;
     }
 }
 
-void func2() {
+void listarNoticias() {
     // lista tudo
     for (int i = 0; i < dados.size(); i++) {
         std::cout << "Texto: " << dados[i].t << std::endl;
@@ -37,7 +37,7 @@ void func2() {
     }
 }
 
-std::string analisar(std::string txt) {
+std::string analisarNoticia(std::string txt) {
     int score = 0;
     
     if (txt.find("FONTE") == std::string::npos) {
@@ -62,49 +62,49 @@ std::string analisar(std::string txt) {
     }
 }
 
-void add_manual() {
-    std::string t, c;
+void criarNoticiaManual() {
+    std::string texto, classificacao;
 
     std::cout << "Digite o texto: ";
-    getline(std::cin, t);
+    getline(std::cin, texto);
 
     std::cout << "Digite classificacao: ";
-    getline(std::cin, c);
+    getline(std::cin, classificacao);
 
-    if (c == "") {
-        f(t);
+    if (classificacao == "") {
+        adicionarNoticiaNoVetor(texto);
     } else {
-        f(t, c);
+        adicionarNoticiaNoVetor(texto, classificacao);
     }
 }
 
-void add_auto() {
-    std::string t;
+void criarNoticiaAuto() {
+    std::string texto;
 
     std::cout << "Digite o texto: ";
-    getline(std::cin, t);
+    getline(std::cin, texto);
 
-    std::string c = analisar(t);
-    f(t, c);
+    std::string classificacao = analisarNoticia(texto);
+    adicionarNoticiaNoVetor(texto, classificacao);
 }
 
-void menu() {
+void abrirMenu() {
     while (true) {
         std::cout << "1 - adicionar manual" << std::endl;
         std::cout << "2 - adicionar automatico" << std::endl;
         std::cout << "3 - listar" << std::endl;
         std::cout << "4 - sair" << std::endl;
 
-        std::string op;
-        getline(std::cin, op);
+        std::string entrada;
+        getline(std::cin,entrada);
 
-        if (op == "1") {
-            add_manual();
-        } else if (op == "2") {
-            add_auto();
-        } else if (op == "3") {
-            func2();
-        } else if (op == "4") {
+        if (entrada == "1") {
+            criarNoticiaManual();
+        } else if (entrada == "2") {
+            criarNoticiaAuto();
+        } else if (entrada == "3") {
+            listarNoticias();
+        } else if (entrada == "4") {
             break;
         } else {
             std::cout << "errado" << std::endl;
@@ -114,6 +114,6 @@ void menu() {
 
 // inicia programa
 int main() {
-    menu();
+    abrirMenu();
     return 0;
 }

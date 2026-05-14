@@ -9,33 +9,6 @@ struct Noticia {
 
 std::vector<Noticia> dados;
 
-// função que faz tudo
-void adicionarNoticiaNoVetor(std::string texto_atual, std::string classificacao_atual = "") {
-    // adiciona coisa
-    if (texto_atual != "") {
-        Noticia noticia_atual;
-        noticia_atual.texto = texto_atual;
-
-        if (classificacao_atual == "") {
-            noticia_atual.classificacao = "duvidosa";
-        } else {
-            noticia_atual.classificacao = classificacao_atual;
-        }
-
-        dados.push_back(noticia_atual);
-    } else {
-        std::cout << "erro" << std::endl;
-    }
-}
-
-void listarNoticias() {
-    // lista tudo
-    for (int i = 0; i < dados.size(); i++) {
-        std::cout << "Texto: " << dados[i].t << std::endl;
-        std::cout << "Classificacao: " << dados[i].c << std::endl;
-        std::cout << "-------------------" << std::endl;
-    }
-}
 
 std::string analisarNoticia(std::string txt) {
     int score = 0;
@@ -55,10 +28,37 @@ std::string analisarNoticia(std::string txt) {
 
     if (score == 0) {
         return "confiavel";
-    } else if (score == 1) {
+    } 
+    else if (score == 1) {
         return "duvidosa";
-    } else {
+    } 
+    else {
         return "falsa";
+    }
+}
+
+// função que faz tudo
+void adicionarNoticiaNoVetor(std::string texto_atual, std::string classificacao_atual = "") {
+    // adiciona coisa
+    Noticia noticia_atual;
+    noticia_atual.texto = texto_atual;
+
+    if (classificacao_atual == "") {
+        noticia_atual.classificacao = "duvidosa";
+    } else {
+        noticia_atual.classificacao = classificacao_atual;
+    }
+
+    dados.push_back(noticia_atual);
+}
+
+bool verificacaoDeTexto(std::string texto_atual){
+    if (texto_atual == ""){
+        std::cout << "Erro: notícia adicionada não possui texto, tente novamente." << std::endl;
+        return false;
+    }
+    else {
+        return true;
     }
 }
 
@@ -71,9 +71,7 @@ void criarNoticiaManual() {
     std::cout << "Digite classificacao: ";
     getline(std::cin, classificacao);
 
-    if (classificacao == "") {
-        adicionarNoticiaNoVetor(texto);
-    } else {
+    if (verificacaoDeTexto(texto)){
         adicionarNoticiaNoVetor(texto, classificacao);
     }
 }
@@ -85,7 +83,20 @@ void criarNoticiaAuto() {
     getline(std::cin, texto);
 
     std::string classificacao = analisarNoticia(texto);
-    adicionarNoticiaNoVetor(texto, classificacao);
+    
+    if(verificacaoDeTexto(texto)){
+        adicionarNoticiaNoVetor(texto, classificacao);
+    }
+}
+
+void listarNoticias() {
+    int tamanho_do_vetor = dados.size();
+    // lista tudo
+    for (int i = 0; i < tamanho_do_vetor; i++) {
+        std::cout << "Texto: " << dados[i].texto << std::endl;
+        std::cout << "Classificacao: " << dados[i].classificacao << std::endl;
+        std::cout << "-------------------" << std::endl;
+    }
 }
 
 void abrirMenu() {
@@ -100,14 +111,22 @@ void abrirMenu() {
 
         if (entrada == "1") {
             criarNoticiaManual();
-        } else if (entrada == "2") {
+        } 
+        
+        else if (entrada == "2") {
             criarNoticiaAuto();
-        } else if (entrada == "3") {
+        } 
+        
+        else if (entrada == "3") {
             listarNoticias();
-        } else if (entrada == "4") {
+        } 
+        
+        else if (entrada == "4") {
             break;
-        } else {
-            std::cout << "errado" << std::endl;
+        } 
+        
+        else {
+            std::cout << "Erro: valor inválido inserido, tente novamente." << std::endl;
         }
     }
 }

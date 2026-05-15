@@ -30,7 +30,8 @@ std::vector<Noticia> dados;
  */
 bool verificacaoDeClassificacao(std::string classificacao_atual){
     if (classificacao_atual != "confiavel" && classificacao_atual != "duvidosa" && classificacao_atual != "falsa"){
-        std::cout << "Erro: classificação inserida é inválida, tente novamente." << std::endl;
+        std::cout << "Erro: classificação inserida é inválida, tente novamente com umas da opções abaixo:" << std::endl;
+        std::cout << "- confiavel" << std::endl << "- duvidosa" << std::endl << "- falsa" << std::endl;
         return false;
     }
     else {
